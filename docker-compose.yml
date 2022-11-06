@@ -10,6 +10,8 @@ services:
     volumes:
       - .:/app
     working_dir: /app
+    ports:
+      - "8080:80"
   migrations:
     image: golang:1.19-alpine
     depends_on:
