@@ -1,0 +1,8 @@
+version: 1
+packages:
+  - path: "db"
+    name: "db"
+    engine: "mysql"
+    schema: "./database/migration/"
+    queries: "./database/query/"
+    emit_interface: true

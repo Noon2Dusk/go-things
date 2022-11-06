@@ -1,10 +1,31 @@
 version: "3.9"
 
 services:
-  service:
+  api:
     image: golang:1.19-alpine
+    depends_on:
+      - db_mysql
     env_file: .env
-    command: sh -c "go run cmd/service/main.go"
+    command: sh -c "sleep 4 && go run cmd/api/main.go"
     volumes:
       - .:/app
     working_dir: /app
+  migrations:
+    image: golang:1.19-alpine
+    depends_on:
+      - db_mysql
+    env_file: .env
+    command: sh -c "sleep 4 && go run cmd/migration/main.go"
+    volumes:
+      - .:/app
+    working_dir: /app
+  db_mysql:
+    env_file: .env
+    image: mysql:8.0
+    volumes:
+      - mysql-db:/var/lib/mysql
+    ports:
+      - "3310:3306"
+
+volumes:
+  mysql-db:
